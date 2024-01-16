@@ -1,15 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import PizzaTranslator from '../components/PizzaTranslator';
+import PlayerSearchItem from '../components/PlayerSearchItem';
 import { common } from '../stylesheets/styles';
-import TrackerView from '../components/TrackerView';
-import PlayerSearch from '../components/PlayerSearch';
+
 
 const HomeScreen = () => {
   return (
     <View style={common.screenContainer}>
-      <TrackerView/>
-      <PizzaTranslator />
+      <PlayerSearchItem></PlayerSearchItem>
     </View>
   );
 }
