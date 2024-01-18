@@ -1,15 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import PlayerSearchItem from '../components/PlayerSearchItem';
+import { View, TouchableOpacity, StyleSheet} from 'react-native';
 import { common } from '../stylesheets/styles';
-
 
 const HomeScreen = () => {
   return (
     <View style={common.screenContainer}>
-      <PlayerSearchItem></PlayerSearchItem>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+
+});
+
 
 export default HomeScreen;
