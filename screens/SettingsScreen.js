@@ -8,7 +8,6 @@ const SettingsScreen = () => {
   return (
     <View style={common.screenContainer}>
       <PlayerSearch/>
-      
     </View>
   );
 }
