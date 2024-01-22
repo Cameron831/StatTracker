@@ -25,7 +25,7 @@ const PlayerSearchItem = (props) => {
         flexDirection: 'row',
         alignItems: 'center',
         //justifyContent: 'space-between',
-        padding: 15
+        padding: 15,
     },
     img: {
         height: 50,

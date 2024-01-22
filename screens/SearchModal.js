@@ -8,6 +8,7 @@ const SearchModal = ({ navigation }) => {
     <View style={common.screenContainer}>
         <PlayerSearch 
             style={styles.search}
+            navigation={navigation}
         />
     </View>
 
@@ -15,7 +16,9 @@ const SearchModal = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-
+  search: {
+    width: '100%'
+  }
 })
 
 export default SearchModal;

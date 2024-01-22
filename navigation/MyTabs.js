@@ -11,6 +11,8 @@ import SettingsScreen from '../screens/SettingsScreen';
 import NewsScreen from '../screens/NewsScreen';
 import StandingsScreen from '../screens/StandingsScreen';
 import SearchModal from '../screens/SearchModal';
+import PlayerModal from '../screens/PlayerModal';
+
 
 //Icons
 import { AntDesign } from '@expo/vector-icons';
@@ -47,11 +49,19 @@ export default function MyTabs() {
           )}
         </Stack.Screen>
     
-        {/* Modal screen */}
+        {/*Search Modal*/}
         <Stack.Screen 
           name="Search"
           component={SearchModal} 
           options={{ 
+            presentation: 'modal'
+          }}
+        />
+        {/* Player Modal */}
+        <Stack.Screen 
+          name="Player"
+          component={PlayerModal}
+          options={{
             presentation: 'modal'
           }}
         />

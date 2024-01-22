@@ -2,10 +2,13 @@ import React, {useState} from 'react';
 import {Text, TextInput, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import PlayerSearchItem from './PlayerSearchItem';
+import { useNavigation } from '@react-navigation/native';
+import PlayerModal from '../screens/PlayerModal';
+
 const playersData = require('../players.json');
 const players = playersData.players
 
-const PlayerSearch = () => {
+const PlayerSearch = ({ navigation }) => {
     const [searchQuery, setSearchQuery] = useState('');
 
 
@@ -39,7 +42,11 @@ const PlayerSearch = () => {
             <FlatList
                 data={filteredPlayers}
                 keyExtractor={item => item.PERSON_ID.toString()}
-                renderItem={({ item }) => <PlayerSearchItem player={item}/>}
+                renderItem={({ item }) => (
+                  <TouchableOpacity onPress={() => navigation.navigate('Player', {player: item})}>
+                    <PlayerSearchItem player={item}/>
+                  </TouchableOpacity>
+                )}
                 style={styles.list}
             />
           </View>
@@ -64,8 +71,10 @@ const PlayerSearch = () => {
       paddingRight: 30,
     },
     window: {
-      height: '100%',
+      height: '90%',
       width: '95%',
+      position: 'absolute',
+      top: 2
     },
     clearButton: {
       position: 'absolute',
