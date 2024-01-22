@@ -1,25 +1,44 @@
 import React from 'react';
 import { View, Image, StyleSheet, Text, Switch} from 'react-native';
-import { common } from '../stylesheets/styles';
+import {common, teamColors, teamLogos} from '../stylesheets/styles';
 
 const PlayerModal = ({route}) => {
     const {player} = route.params
+    const teamColor = teamColors[player.TEAM_ABBREVIATION]
 
     return (
         <View style={{height: '100%'}}>
             {/*Header*/}
-            <View style={styles.headerContainer}>
+            <View style={[styles.headerContainer, { backgroundColor: teamColor }]}>
                 <Image
                     source={{
                         uri: 'https://cdn.nba.com/headshots/nba/latest/1040x760/'+player.PERSON_ID+'.png'
                     }}
                     style={styles.image}
                 />
+                <Image
+                  source={teamLogos[player.TEAM_ID]}
+                  style={styles.logo}
+                />
                 <View style={styles.textContainer}>
-                    <Text style={styles.headerText}>{player.PLAYER_FIRST_NAME}</Text>
-                    <Text style={styles.headerText}>{player.PLAYER_LAST_NAME}</Text>
+                    <Text 
+                      style={styles.headerText}
+                      numberOfLines={1}
+                      ellipsizeMode='tail'
+                    >{player.PLAYER_FIRST_NAME}</Text>
+                    <Text 
+                      style={styles.headerText}
+                      numberOfLines={1}
+                      ellipsizeMode='tail'
+                    >{player.PLAYER_LAST_NAME}</Text>
                     <Text style={styles.headerText}>#{player.JERSEY_NUMBER}</Text>
                 </View>
+            </View>
+
+            <View>
+              <Text>
+
+              </Text>
             </View>
   
             {/*Stat Body*/}
@@ -113,26 +132,39 @@ const PlayerModal = ({route}) => {
 
 const styles = StyleSheet.create({
     headerContainer: {
-      height: '25%', // Set the height to the value you want
+      height: '20%', // Set the height to the value you want
       overflow: 'hidden',    // This hides the part of the image outside the container
-      backgroundColor: '#0268d6',
+      //backgroundColor
     },
     image: {
-      width: '60%',
-      height: '100%',
-      resizeMode: 'cover',
+      width: '50%',
+      height: '90%',
+      //resizeMode: 'cover',
       position: 'absolute',
-      top: 5,               // Align the top of the image with the container
+      //top: 5,               // Align the top of the image with the container
+      bottom: 0,
+      zIndex: 1
+    },
+    logo : {
+      width: '100%',
+      height: '100%',
+      position: 'absolute',
+      zIndex: 0,
+      opacity: 0.15
     },
     textContainer: {
       width: '50%',
       position: 'absolute',
+      zIndex: 2,
       right: 0,
       height: '100%',
+      marginTop: 15,
+      marginRight: 10
     },
     headerText: {
       color: 'white', 
-      fontSize: 35,
+      fontSize: 40,
+      textAlign: 'left',
     },
     statBody: {
       alignItems: 'center',
