@@ -1,31 +1,36 @@
 import React, {useState} from 'react';
-import {Text, TextInput, View, StyleSheet} from 'react-native';
-import TrackedPlayer from './TrackedPlayer';
+import {Text, FlatList, View, StyleSheet} from 'react-native';
+//import TrackedPlayer from './TrackedPlayer';
+import TrackedPlayer from './TrackedPlayerAlt';
 
 const playersData = require('../players.json');
 const players = playersData.players
 
 const TrackerView = () => {
-  const [text, setText] = useState('');
+  const filteredPlayers = playersData.players.filter(player =>
+    player.PLAYER_SLUG.toLowerCase()
+  ).slice(0, 10);
 
   return (
     <View style={styles.container}>
-      <TrackedPlayer player={players[0]}/>
-      <TrackedPlayer player={players[0]}/>
-      <TrackedPlayer player={players[0]}/>
-      <TrackedPlayer player={players[0]}/>
-      <TrackedPlayer player={players[0]}/>
-      <TrackedPlayer player={players[0]}/>
+      <FlatList
+          data={filteredPlayers}
+          keyExtractor={item => item.PERSON_ID.toString()}
+          renderItem={({ item }) => (
+            <TrackedPlayer player={item}/>
+          )}
+          style={styles.list}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    flexWrap: 'wrap'
+    height: '100%'
+  },
+  list: {
+
   }
 
 })
