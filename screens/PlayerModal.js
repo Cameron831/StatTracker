@@ -1,10 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Image, StyleSheet, Text, Switch} from 'react-native';
 import {common, teamColors, teamLogos} from '../stylesheets/styles';
+
+const trackedPlayersData = require('../trackedStats.json')
+const tp = trackedPlayersData.trackedPlayers
 
 const PlayerModal = ({route}) => {
     const {player} = route.params
     const teamColor = teamColors[player.TEAM_ABBREVIATION]
+
+    const [trackedPlayers, setTrackedPlayers] = useState(tp);
+
+    const toggleStat = (playerID, stat) => {
+      setTrackedPlayers(currentPlayers => {
+        let updatedPlayers = currentPlayers.map(p => {
+          if (p.PERSON_ID === playerID) {
+            let newStats = p.STATS.includes(stat)
+              ? p.STATS.filter(s => s !== stat)  // Remove stat
+              : [...p.STATS, stat];              // Add stat
+            return { ...p, STATS: newStats };
+          }
+          return p;
+        });
+    
+        // Check if player is already being tracked, if not, add them
+        const isPlayerTracked = updatedPlayers.some(p => p.PERSON_ID === playerID);
+        if (!isPlayerTracked) {
+          updatedPlayers = [
+            ...updatedPlayers,
+            {
+              "PERSON_ID": playerID,
+              "PLAYER_LAST_NAME": player.PLAYER_LAST_NAME,
+              "PLAYER_FIRST_NAME": player.PLAYER_FIRST_NAME,
+              "TEAM_ID": player.TEAM_ID,
+              "STATS": [stat]
+            }
+          ];
+        }
+    
+        return updatedPlayers;
+      });
+    };
 
     return (
         <View style={{height: '100%'}}>
@@ -46,6 +82,7 @@ const PlayerModal = ({route}) => {
                 <Text style={styles.statTitle}>
                     STATS
                 </Text>
+
                 <View style={styles.line}/>
                 {/*Stat Container*/}
                 <View style={styles.statContainer}>
@@ -55,8 +92,11 @@ const PlayerModal = ({route}) => {
                     </View>
                     {/*Switch Container*/}
                     <View style={styles.statItemContainer}>
-                    <Switch
-                        />
+                      <Switch
+                        value={trackedPlayers.some(p => p.PERSON_ID === player.PERSON_ID && p.STATS.includes("PTS"))}
+                        onValueChange={newValue => toggleStat(player.PERSON_ID, "PTS")}
+                      />
+
                     </View>
                 </View>
     
@@ -69,7 +109,9 @@ const PlayerModal = ({route}) => {
                     {/*Switch Container*/}
                     <View style={styles.statItemContainer}>
                     <Switch
-                        />
+                      value={trackedPlayers.some(p => p.PERSON_ID === player.PERSON_ID && p.STATS.includes("REB"))}
+                      onValueChange={newValue => toggleStat(player.PERSON_ID, "REB")}
+                    />
                     </View>
                 </View>
         
@@ -82,7 +124,9 @@ const PlayerModal = ({route}) => {
                     {/*Switch Container*/}
                     <View style={styles.statItemContainer}>
                     <Switch
-                        />
+                      value={trackedPlayers.some(p => p.PERSON_ID === player.PERSON_ID && p.STATS.includes("AST"))}
+                      onValueChange={newValue => toggleStat(player.PERSON_ID, "AST")}
+                    />
                     </View>
                 </View>
         
@@ -95,7 +139,9 @@ const PlayerModal = ({route}) => {
                     {/*Switch Container*/}
                     <View style={styles.statItemContainer}>
                     <Switch
-                        />
+                      value={trackedPlayers.some(p => p.PERSON_ID === player.PERSON_ID && p.STATS.includes("3PM"))}
+                      onValueChange={newValue => toggleStat(player.PERSON_ID, "3PM")}
+                    />
                     </View>
                 </View>
     
@@ -108,7 +154,9 @@ const PlayerModal = ({route}) => {
                     {/*Switch Container*/}
                     <View style={styles.statItemContainer}>
                     <Switch
-                        />
+                      value={trackedPlayers.some(p => p.PERSON_ID === player.PERSON_ID && p.STATS.includes("BLK"))}
+                      onValueChange={newValue => toggleStat(player.PERSON_ID, "BLK")}
+                    />
                     </View>
                 </View>
     
@@ -121,7 +169,9 @@ const PlayerModal = ({route}) => {
                     {/*Switch Container*/}
                     <View style={styles.statItemContainer}>
                     <Switch
-                        />
+                      value={trackedPlayers.some(p => p.PERSON_ID === player.PERSON_ID && p.STATS.includes("STL"))}
+                      onValueChange={newValue => toggleStat(player.PERSON_ID, "STL")}
+                    />
                     </View>
                 </View>
             </View>
