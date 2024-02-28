@@ -20,7 +20,7 @@ import { AntDesign } from '@expo/vector-icons';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-export default function MyTabs() {
+export default function MyTabs({trackingInfo}) {
 
   return (
       <Stack.Navigator>
@@ -30,7 +30,8 @@ export default function MyTabs() {
             <Tab.Navigator>
               <Tab.Screen 
                 name="Home" 
-                component={HomeScreen}
+                children={() => <HomeScreen trackingInfo={trackingInfo}/>}
+                //component={HomeScreen}
                 options={{
                   headerRight: () => {
                     const navigation = useNavigation();
@@ -41,7 +42,7 @@ export default function MyTabs() {
                     );
                   },
                 }}
-              />
+              /> 
               <Tab.Screen name="News" component={NewsScreen} />
               <Tab.Screen name="Standings" component={StandingsScreen} />
               <Tab.Screen name="Settings" component={SettingsScreen} />

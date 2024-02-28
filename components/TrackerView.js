@@ -6,10 +6,14 @@ import TrackedPlayer from './TrackedPlayerAlt';
 const playersData = require('../players.json');
 const players = playersData.players
 
-const TrackerView = () => {
+const TrackerView = ({trackingInfo}) => {
+  console.log(trackingInfo)
+
   const filteredPlayers = playersData.players.filter(player =>
     player.PLAYER_SLUG.toLowerCase()
   ).slice(0, 10);
+
+  console.log(filteredPlayers)
 
   return (
     <View style={styles.container}>
