@@ -1,10 +1,31 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text } from 'react-native';
+import {} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import MyTabs from './navigation/MyTabs';
+import SplashScreen from './screens/SplashScreen';
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getTracking = async () => {
+      try {
+        const tracking = await axios.get("http://192.168.1.13:3000/user/65deaba5946c295b3481d0c3")
+        console.log(tracking.data)
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching tracking", error)
+      }
+    }
+    getTracking()
+  }, []);
+
+  if (isLoading) {
+    return <SplashScreen />;
+  }
+  
   return (
     <NavigationContainer>
       <StatusBar style="auto" />
