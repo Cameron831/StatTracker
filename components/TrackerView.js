@@ -13,15 +13,14 @@ const TrackerView = ({trackingInfo}) => {
     player.PLAYER_SLUG.toLowerCase()
   ).slice(0, 10);
 
-  console.log(filteredPlayers)
 
   return (
     <View style={styles.container}>
       <FlatList
-          data={filteredPlayers}
-          keyExtractor={item => item.PERSON_ID.toString()}
+          data={trackingInfo}
+          keyExtractor={item => item.player}
           renderItem={({ item }) => (
-            <TrackedPlayer player={item}/>
+            <TrackedPlayer item={item}/>
           )}
           style={styles.list}
       />

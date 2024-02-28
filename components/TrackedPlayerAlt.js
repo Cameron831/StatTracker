@@ -2,8 +2,15 @@ import React from 'react';
 import { View, Text, StyleSheet, Image} from 'react-native';
 import { common } from '../stylesheets/styles';
 
+const playersData = require('../players.json');
+//const players = playersData.players
+
 const TrackedPlayer = (props) => {
-    const player = props.player
+    const trackedPlayer = props.item
+    console.log(trackedPlayer)
+
+    const player = playersData.players.find(p => p.PERSON_ID == trackedPlayer.player)
+    //console.log(player)
 
     return (
         <View style={styles.container}>
@@ -25,29 +32,42 @@ const TrackedPlayer = (props) => {
             </View>
 
             <View style={styles.body}>
-                <View style={styles.statContainer}>
-                    <Text style={styles.stat}>PTS: {player.PTS}</Text>
-                </View>
+                {trackedPlayer.PTS && 
+                    <View style={styles.statContainer}>
+                        <Text style={styles.stat}>PTS: {player.PTS}</Text>
+                    </View>
+                }
+                
 
-                <View style={styles.statContainer}>
-                    <Text style={styles.stat}>REB: {player.REB}</Text>
-                </View>
+                {trackedPlayer.REB &&
+                    <View style={styles.statContainer}>
+                        <Text style={styles.stat}>REB: {player.PTS}</Text>
+                    </View>
+                }
                 
-                <View style={styles.statContainer}>
-                    <Text style={styles.stat}>AST: {player.REB}</Text>
-                </View>
+                {trackedPlayer.AST &&
+                    <View style={styles.statContainer}>
+                        <Text style={styles.stat}>AST: {player.PTS}</Text>
+                    </View>
+                }
 
-                <View style={styles.statContainer}>
-                    <Text style={styles.stat}>3PM: {player.REB}</Text>
-                </View>
+                {trackedPlayer.TPM && 
+                    <View style={styles.statContainer}>
+                        <Text style={styles.stat}>3PM: {player.PTS}</Text>
+                    </View> 
+                }
                 
-                <View style={styles.statContainer}>
-                    <Text style={styles.stat}>BLK: {player.REB}</Text>
-                </View>
-                
-                <View style={styles.statContainer}>
-                    <Text style={styles.stat}>STL: {player.REB}</Text>
-                </View>
+                {trackedPlayer.BLK &&
+                    <View style={styles.statContainer}>
+                        <Text style={styles.stat}>BLK: {player.PTS}</Text>
+                    </View>
+                }
+
+                {trackedPlayer.STL && 
+                    <View style={styles.statContainer}>
+                        <Text style={styles.stat}>STL: {player.REB}</Text>
+                    </View>
+                }
                 
             </View>
         </View>
