@@ -62,6 +62,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 20,
         margin: '2.5%',
+        backgroundColor: 'white',
+        overflow: 'hidden'
         //maxHeight: '5%'
         //alignItems: 'center'
         //height: '35%'
@@ -70,6 +72,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         //height: '30%',
         borderBottomWidth: 1,
+        backgroundColor: '#CEDEF2',
         //borderWidth: 1,
         //alignItems: 'center',
         //justifyContent: 'center'
