@@ -1,46 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Text, Switch} from 'react-native';
-import {common, teamColors, teamLogos} from '../stylesheets/styles';
-
-const trackedPlayersData = require('../trackedStats.json')
-const tp = trackedPlayersData.trackedPlayers
+import {teamColors, teamLogos} from '../stylesheets/styles';
+import axios from 'axios';
 
 const PlayerModal = ({route}) => {
-    const {player} = route.params
-    const teamColor = teamColors[player.TEAM_ABBREVIATION]
+    const [trackingInfo, setTrackinfInfo] = useState([])
 
-    const [trackedPlayers, setTrackedPlayers] = useState(tp);
-
-    const toggleStat = (playerID, stat) => {
-      setTrackedPlayers(currentPlayers => {
-        let updatedPlayers = currentPlayers.map(p => {
-          if (p.PERSON_ID === playerID) {
-            let newStats = p.STATS.includes(stat)
-              ? p.STATS.filter(s => s !== stat)  // Remove stat
-              : [...p.STATS, stat];              // Add stat
-            return { ...p, STATS: newStats };
-          }
-          return p;
-        });
-    
-        // Check if player is already being tracked, if not, add them
-        const isPlayerTracked = updatedPlayers.some(p => p.PERSON_ID === playerID);
-        if (!isPlayerTracked) {
-          updatedPlayers = [
-            ...updatedPlayers,
-            {
-              "PERSON_ID": playerID,
-              "PLAYER_LAST_NAME": player.PLAYER_LAST_NAME,
-              "PLAYER_FIRST_NAME": player.PLAYER_FIRST_NAME,
-              "TEAM_ID": player.TEAM_ID,
-              "STATS": [stat]
-            }
-          ];
+    useEffect(() => {
+      const getTracking = async () => {
+        try {
+          const tracking = await axios.get("http://192.168.1.13:3000/user/65deaba5946c295b3481d0c3")
+          const player = tracking.data.find(p => p.player == route.params.player.PERSON_ID)
+          setTrackinfInfo(player)
+        } catch (error) {
+          console.error("Error fetching tracking", error)
         }
-    
-        return updatedPlayers;
-      });
+      }
+      getTracking()
+    }, []);
+
+    const updateTrackingDatabase = async (updatedTrackingInfo) => {
+      try {
+        const response = await axios.put("http://192.168.1.13:3000/user/tracking", updatedTrackingInfo);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error updating tracking info", error);
+      }
     };
+
+    const toggleStat = (statValue, stat) => {
+      const updatedTrackingInfo = {
+        ...trackingInfo,
+        [stat]: !statValue,
+      };
+      setTrackinfInfo(updatedTrackingInfo)
+      updateTrackingDatabase(updatedTrackingInfo)
+      return !statValue
+    }
+
+    const player = route.params.player
+
+    //console.log(player)
+    //console.log(trackingInfo)
+
+    const teamColor = teamColors[player.TEAM_ABBREVIATION]
 
     return (
         <View style={{height: '100%'}}>
@@ -93,8 +96,8 @@ const PlayerModal = ({route}) => {
                     {/*Switch Container*/}
                     <View style={styles.statItemContainer}>
                       <Switch
-                        value={trackedPlayers.some(p => p.PERSON_ID === player.PERSON_ID && p.STATS.includes("PTS"))}
-                        onValueChange={newValue => toggleStat(player.PERSON_ID, "PTS")}
+                        value={trackingInfo.PTS}
+                        onValueChange={newValue => toggleStat(trackingInfo.PTS, "PTS")}
                       />
 
                     </View>
@@ -109,8 +112,8 @@ const PlayerModal = ({route}) => {
                     {/*Switch Container*/}
                     <View style={styles.statItemContainer}>
                     <Switch
-                      value={trackedPlayers.some(p => p.PERSON_ID === player.PERSON_ID && p.STATS.includes("REB"))}
-                      onValueChange={newValue => toggleStat(player.PERSON_ID, "REB")}
+                      value={trackingInfo.REB}
+                      onValueChange={newValue => toggleStat(trackingInfo.REB, "REB")}
                     />
                     </View>
                 </View>
@@ -124,8 +127,8 @@ const PlayerModal = ({route}) => {
                     {/*Switch Container*/}
                     <View style={styles.statItemContainer}>
                     <Switch
-                      value={trackedPlayers.some(p => p.PERSON_ID === player.PERSON_ID && p.STATS.includes("AST"))}
-                      onValueChange={newValue => toggleStat(player.PERSON_ID, "AST")}
+                      value={trackingInfo.AST}
+                      onValueChange={newValue => toggleStat(trackingInfo.AST, "AST")}
                     />
                     </View>
                 </View>
@@ -139,8 +142,8 @@ const PlayerModal = ({route}) => {
                     {/*Switch Container*/}
                     <View style={styles.statItemContainer}>
                     <Switch
-                      value={trackedPlayers.some(p => p.PERSON_ID === player.PERSON_ID && p.STATS.includes("3PM"))}
-                      onValueChange={newValue => toggleStat(player.PERSON_ID, "3PM")}
+                      value={trackingInfo.TPM}
+                      onValueChange={newValue => toggleStat(trackingInfo.TPM, "TPM")}
                     />
                     </View>
                 </View>
@@ -154,8 +157,8 @@ const PlayerModal = ({route}) => {
                     {/*Switch Container*/}
                     <View style={styles.statItemContainer}>
                     <Switch
-                      value={trackedPlayers.some(p => p.PERSON_ID === player.PERSON_ID && p.STATS.includes("BLK"))}
-                      onValueChange={newValue => toggleStat(player.PERSON_ID, "BLK")}
+                      value={trackingInfo.BLK}
+                      onValueChange={newValue => toggleStat(trackingInfo.BLK, "BLK")}
                     />
                     </View>
                 </View>
@@ -169,8 +172,8 @@ const PlayerModal = ({route}) => {
                     {/*Switch Container*/}
                     <View style={styles.statItemContainer}>
                     <Switch
-                      value={trackedPlayers.some(p => p.PERSON_ID === player.PERSON_ID && p.STATS.includes("STL"))}
-                      onValueChange={newValue => toggleStat(player.PERSON_ID, "STL")}
+                      value={trackingInfo.STL}
+                      onValueChange={newValue => toggleStat(trackingInfo.STL, "STL")}
                     />
                     </View>
                 </View>

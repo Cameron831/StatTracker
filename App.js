@@ -18,11 +18,11 @@ function App() {
           <Stack.Screen name="Splash" component={SplashScreen}/>
 
           <Stack.Screen name="Home" component={HomeScreen} 
-          options={({ navigation }) => ({
-            headerRight: () => (
-              <SearchButton navigation={navigation} />
-            )
-          })}
+            options={({ navigation }) => ({
+              headerRight: () => (
+                <SearchButton navigation={navigation} />
+              )
+            })}
           />
 
           {/*Search Modal*/}
