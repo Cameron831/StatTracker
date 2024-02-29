@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text} from 'react-native';
 import axios from 'axios';
-import { common } from '../stylesheets/styles';
 import TrackerView from '../components/TrackerView';
 
 const HomeScreen = () => {

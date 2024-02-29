@@ -6,6 +6,7 @@ import HomeScreen from './screens/HomeScreen';
 import SplashScreen from './screens/SplashScreen';
 import SearchModal from './screens/SearchModal';
 import PlayerModal from './screens/PlayerModal';
+import SearchButton from './components/SearchButton';
 
 const Stack = createStackNavigator();
 
@@ -16,8 +17,13 @@ function App() {
 
           <Stack.Screen name="Splash" component={SplashScreen}/>
 
-          <Stack.Screen name="Home" component={HomeScreen} />
-
+          <Stack.Screen name="Home" component={HomeScreen} 
+          options={({ navigation }) => ({
+            headerRight: () => (
+              <SearchButton navigation={navigation} />
+            )
+          })}
+          />
 
           {/*Search Modal*/}
           <Stack.Screen 
