@@ -6,7 +6,7 @@ import TrackerView from '../components/TrackerView';
 const HomeScreen = () => {
   return (
     <View>
-      <TrackerView/>
+      {/*<TrackerView/>*/}
     </View>
   );
 }

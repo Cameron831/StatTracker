@@ -1,35 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { StatusBar } from 'expo-status-bar';
-import {} from 'react-native';
+import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import MyTabs from './navigation/MyTabs';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import HomeScreen from './screens/HomeScreen';
 import SplashScreen from './screens/SplashScreen';
+import SearchModal from './screens/SearchModal';
+import PlayerModal from './screens/PlayerModal';
 
-export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
+const Stack = createStackNavigator();
 
-  useEffect(() => {
-    const getTracking = async () => {
-      try {
-        const tracking = await axios.get("http://192.168.1.13:3000/user/65deaba5946c295b3481d0c3")
-        console.log(tracking.data)
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching tracking", error)
-      }
-    }
-    getTracking()
-  }, []);
+function App() {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Splash">
 
-  if (isLoading) {
-    return <SplashScreen />;
+          <Stack.Screen name="Splash" component={SplashScreen}/>
+
+          <Stack.Screen name="Home" component={HomeScreen} />
+
+
+          {/*Search Modal*/}
+          <Stack.Screen 
+            name="Search"
+            component={SearchModal} 
+            options={{ 
+              presentation: 'modal'
+            }}
+          />
+
+          {/* Player Modal */}
+          <Stack.Screen 
+            name="Player"
+            component={PlayerModal}
+            options={{
+              presentation: 'modal'
+            }}
+          />
+          </Stack.Navigator>
+      </NavigationContainer>
+    );
   }
-  
-  return (
-    <NavigationContainer>
-      <StatusBar style="auto" />
-      <MyTabs />
-    </NavigationContainer>
-  );
-}
+
+  export default App;
