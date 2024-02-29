@@ -3,26 +3,39 @@ import { View, Image, StyleSheet, Text, Switch} from 'react-native';
 import {teamColors, teamLogos} from '../stylesheets/styles';
 import axios from 'axios';
 
-const PlayerModal = ({route}) => {
-    const [trackingInfo, setTrackinfInfo] = useState([])
+const PlayerModal = ({route, navigation}) => {
+    const [trackingInfo, setTrackingInfo] = useState({})
+    const player = route.params.player
 
     useEffect(() => {
-      const getTracking = async () => {
-        try {
-          const tracking = await axios.get("http://192.168.1.13:3000/user/65deaba5946c295b3481d0c3")
-          const player = tracking.data.find(p => p.player == route.params.player.PERSON_ID)
-          setTrackinfInfo(player)
-        } catch (error) {
-          console.error("Error fetching tracking", error)
-        }
+
+      const unsubscribeBlur = navigation.addListener('blur', () => {
+        updateTrackingDatabase(trackingInfo)
+      });
+
+      const unsubscribeFocus = navigation.addListener('focus', () => {
+        getTracking()
+      })
+      
+      return () => {
+        unsubscribeBlur();
+        unsubscribeFocus();
+      };
+    }, [navigation, trackingInfo]);
+
+    const getTracking = async () => {
+      try {
+        const tracking = await axios.get("http://192.168.1.13:3000/user/65deaba5946c295b3481d0c3")
+        const player = tracking.data.find(p => p.player == route.params.player.PERSON_ID)
+        setTrackingInfo(player)
+      } catch (error) {
+        console.error("Error fetching tracking", error)
       }
-      getTracking()
-    }, []);
+    }
 
     const updateTrackingDatabase = async (updatedTrackingInfo) => {
       try {
         const response = await axios.put("http://192.168.1.13:3000/user/tracking", updatedTrackingInfo);
-        console.log(response.data);
       } catch (error) {
         console.error("Error updating tracking info", error);
       }
@@ -33,15 +46,8 @@ const PlayerModal = ({route}) => {
         ...trackingInfo,
         [stat]: !statValue,
       };
-      setTrackinfInfo(updatedTrackingInfo)
-      updateTrackingDatabase(updatedTrackingInfo)
-      return !statValue
+      setTrackingInfo(updatedTrackingInfo)
     }
-
-    const player = route.params.player
-
-    //console.log(player)
-    //console.log(trackingInfo)
 
     const teamColor = teamColors[player.TEAM_ABBREVIATION]
 
