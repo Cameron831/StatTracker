@@ -26,12 +26,27 @@ const PlayerModal = ({route, navigation}) => {
     const getTracking = async () => {
       try {
         const tracking = await axios.get("http://192.168.1.13:3000/user/65deaba5946c295b3481d0c3")
-        const player = tracking.data.find(p => p.player == route.params.player.PERSON_ID)
-        setTrackingInfo(player)
+        let foundPlayer = tracking.data.find(p => p.player == route.params.player.PERSON_ID);
+        if(!foundPlayer) {
+          const newPlayerData = {
+            player: route.params.player.PERSON_ID,
+            PTS: false,
+            REB: false,
+            AST: false,
+            TPM: false,
+            BLK: false,
+            STL: false,
+            user: "65deaba5946c295b3481d0c3"
+          };
+          const response = await axios.post("http://192.168.1.13:3000/user/tracking", newPlayerData);
+          foundPlayer = response.data; 
+        }
+        setTrackingInfo(foundPlayer);
       } catch (error) {
-        console.error("Error fetching tracking", error)
+        console.error("Error fetching tracking", error);
       }
-    }
+    };
+    
 
     const updateTrackingDatabase = async (updatedTrackingInfo) => {
       try {
@@ -191,16 +206,13 @@ const PlayerModal = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
     headerContainer: {
-      height: '20%', // Set the height to the value you want
-      overflow: 'hidden',    // This hides the part of the image outside the container
-      //backgroundColor
+      height: '20%',
+      overflow: 'hidden',    
     },
     image: {
       width: '50%',
       height: '90%',
-      //resizeMode: 'cover',
       position: 'absolute',
-      //top: 5,               // Align the top of the image with the container
       bottom: 0,
       zIndex: 1
     },

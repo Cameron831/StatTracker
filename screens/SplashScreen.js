@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Dimensions, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
 
 const SplashScreen = ({navigation}) => {
 
