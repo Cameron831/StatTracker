@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image} from 'react-native';
-import { common } from '../stylesheets/styles';
+import axios from 'axios';
+
+const playersData = require('../players.json');
 
 const TrackedPlayer = (props) => {
-    const player = props.player
+    const trackedPlayer = props.item
+    const player = playersData.players.find(p => p.PERSON_ID == trackedPlayer.player)
+
+    const [boxScore, setBoxScore] = useState({})
+
+    useEffect(() => {
+        const getBoxScore = async () => {
+          try {
+            const box = await axios.get("http://192.168.1.13:3000/player/box-score/"+player.PERSON_ID)
+            setBoxScore(box.data)
+          } catch (error) {
+            console.error("Error fetching box score", error)
+          }
+        }
+        getBoxScore()
+      }, []);
 
     return (
         <View style={styles.container}>
@@ -19,35 +36,48 @@ const TrackedPlayer = (props) => {
                 </View>
                  
                 <View style={styles.timeLeft}> 
-                    <Text style={styles.time}>Q4: 11:36</Text>
+                    <Text style={styles.time}>Q{boxScore.period}:  {boxScore.gameClock}</Text>
                 </View>
                 
             </View>
 
             <View style={styles.body}>
-                <View style={styles.statContainer}>
-                    <Text style={styles.stat}>PTS: {player.PTS}</Text>
-                </View>
+                {trackedPlayer.PTS && 
+                    <View style={styles.statContainer}>
+                        <Text style={styles.stat}>PTS: {boxScore.PTS}</Text>
+                    </View>
+                }
+                
 
-                <View style={styles.statContainer}>
-                    <Text style={styles.stat}>REB: {player.REB}</Text>
-                </View>
+                {trackedPlayer.REB &&
+                    <View style={styles.statContainer}>
+                        <Text style={styles.stat}>REB: {boxScore.REB}</Text>
+                    </View>
+                }
                 
-                <View style={styles.statContainer}>
-                    <Text style={styles.stat}>AST: {player.REB}</Text>
-                </View>
+                {trackedPlayer.AST &&
+                    <View style={styles.statContainer}>
+                        <Text style={styles.stat}>AST: {boxScore.AST}</Text>
+                    </View>
+                }
 
-                <View style={styles.statContainer}>
-                    <Text style={styles.stat}>3PM: {player.REB}</Text>
-                </View>
+                {trackedPlayer.TPM && 
+                    <View style={styles.statContainer}>
+                        <Text style={styles.stat}>3PM: {boxScore.TPM}</Text>
+                    </View> 
+                }
                 
-                <View style={styles.statContainer}>
-                    <Text style={styles.stat}>BLK: {player.REB}</Text>
-                </View>
-                
-                <View style={styles.statContainer}>
-                    <Text style={styles.stat}>STL: {player.REB}</Text>
-                </View>
+                {trackedPlayer.BLK &&
+                    <View style={styles.statContainer}>
+                        <Text style={styles.stat}>BLK: {boxScore.BLK}</Text>
+                    </View>
+                }
+
+                {trackedPlayer.STL && 
+                    <View style={styles.statContainer}>
+                        <Text style={styles.stat}>STL: {boxScore.STL}</Text>
+                    </View>
+                }
                 
             </View>
         </View>

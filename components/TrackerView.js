@@ -1,23 +1,16 @@
 import React, {useState} from 'react';
 import {Text, FlatList, View, StyleSheet} from 'react-native';
-//import TrackedPlayer from './TrackedPlayer';
 import TrackedPlayer from './TrackedPlayerAlt';
 
-const playersData = require('../players.json');
-const players = playersData.players
-
-const TrackerView = () => {
-  const filteredPlayers = playersData.players.filter(player =>
-    player.PLAYER_SLUG.toLowerCase()
-  ).slice(0, 10);
+const TrackerView = ({trackingInfo}) => {
 
   return (
     <View style={styles.container}>
       <FlatList
-          data={filteredPlayers}
-          keyExtractor={item => item.PERSON_ID.toString()}
+          data={trackingInfo}
+          keyExtractor={item => item.player}
           renderItem={({ item }) => (
-            <TrackedPlayer player={item}/>
+            <TrackedPlayer item={item}/>
           )}
           style={styles.list}
       />
