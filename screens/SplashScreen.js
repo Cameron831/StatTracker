@@ -6,7 +6,7 @@ const SplashScreen = ({navigation}) => {
   React.useEffect(() => {
     const timer = setTimeout(() => {
       navigation.replace('Home');
-    }, 5000);
+    }, 3000);
     return () => clearTimeout(timer);
   }, [navigation])
 
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: '100%',
-        backgroundColor: '#fff', // You can change this to your desired background color
+        backgroundColor: '#fff',
     },
     text: {
         fontSize: 20,

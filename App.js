@@ -7,6 +7,8 @@ import SplashScreen from './screens/SplashScreen';
 import SearchModal from './screens/SearchModal';
 import PlayerModal from './screens/PlayerModal';
 import SearchButton from './components/SearchButton';
+import ProfileButton from './components/ProfileButton';
+import ProfileModal from './screens/ProfileModal';
 
 const Stack = createStackNavigator();
 
@@ -21,7 +23,11 @@ function App() {
             options={({ navigation }) => ({
               headerRight: () => (
                 <SearchButton navigation={navigation} />
-              )
+              ),
+              headerLeft: () => (
+                <ProfileButton navigation={navigation}/>
+              ),
+              headerTitleAlign: "center"
             })}
           />
 
@@ -30,7 +36,8 @@ function App() {
             name="Search"
             component={SearchModal} 
             options={{ 
-              presentation: 'modal'
+              presentation: 'modal',
+              headerTitleAlign: "center"
             }}
           />
 
@@ -39,7 +46,18 @@ function App() {
             name="Player"
             component={PlayerModal}
             options={{
-              presentation: 'modal'
+              presentation: 'modal',
+              headerTitleAlign: "center"
+            }}
+          />
+
+          {/* Profile Modal */}
+          <Stack.Screen
+            name="Profile"
+            component={ProfileModal}
+            options={{
+              presentation: 'modal',
+              headerTitleAlign: "center"
             }}
           />
           </Stack.Navigator>
