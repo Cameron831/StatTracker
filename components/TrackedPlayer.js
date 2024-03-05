@@ -4,8 +4,8 @@ import axios from 'axios';
 
 const playersData = require('../players.json');
 
-const TrackedPlayer = (props) => {
-    const trackedPlayer = props.item
+const TrackedPlayer = ({item, refreshKey}) => {
+    const trackedPlayer = item
     const player = playersData.players.find(p => p.PERSON_ID == trackedPlayer.player)
 
     const [boxScore, setBoxScore] = useState({})
@@ -21,7 +21,7 @@ const TrackedPlayer = (props) => {
           }
         }
         getBoxScore()
-      }, []);
+      }, [refreshKey]);
 
     return (
         <View style={styles.container}>
