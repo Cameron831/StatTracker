@@ -9,6 +9,8 @@ import PlayerModal from './screens/PlayerModal';
 import SearchButton from './components/SearchButton';
 import ProfileButton from './components/ProfileButton';
 import ProfileModal from './screens/ProfileModal';
+import LoginScreen from './screens/LoginScreen';
+import SignUpScreen from './screens/SignUpScreen';
 
 const Stack = createStackNavigator();
 
@@ -16,8 +18,11 @@ function App() {
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Splash">
-
+          
           <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }}/>
+          
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }}/>
 
           <Stack.Screen name="Home" component={HomeScreen} 
             options={({ navigation }) => ({

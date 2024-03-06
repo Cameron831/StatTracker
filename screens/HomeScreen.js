@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import TrackerView from '../components/TrackerView';
 
 const HomeScreen = ({ navigation }) => {
@@ -9,7 +10,8 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     const getTracking = async () => {
       try {
-        const tracking = await axios.get("http://192.168.1.13:3000/user/65deaba5946c295b3481d0c3");
+        const token = await AsyncStorage.getItem('LOGIN_TOKEN');
+        const tracking = await axios.get(`http://192.168.1.13:3000/user/tracking/${token}`);
         setTrackingInfo(tracking.data);
       } catch (error) {
         console.error("Error fetching tracking", error);

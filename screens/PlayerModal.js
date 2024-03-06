@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Text, Switch} from 'react-native';
 import {teamColors, teamLogos} from '../stylesheets/styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 const PlayerModal = ({route, navigation}) => {
@@ -25,7 +26,8 @@ const PlayerModal = ({route, navigation}) => {
 
     const getTracking = async () => {
       try {
-        const tracking = await axios.get("http://192.168.1.13:3000/user/65deaba5946c295b3481d0c3")
+        const token = await AsyncStorage.getItem('LOGIN_TOKEN');
+        const tracking = await axios.get(`http://192.168.1.13:3000/user/tracking/${token}`)
         let foundPlayer = tracking.data.find(p => p.player == route.params.player.PERSON_ID);
         if(!foundPlayer) {
           const newPlayerData = {
@@ -36,7 +38,7 @@ const PlayerModal = ({route, navigation}) => {
             TPM: false,
             BLK: false,
             STL: false,
-            user: "65deaba5946c295b3481d0c3"
+            user: token
           };
           const response = await axios.post("http://192.168.1.13:3000/user/tracking", newPlayerData);
           foundPlayer = response.data; 
