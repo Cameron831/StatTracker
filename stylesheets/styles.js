@@ -67,6 +67,14 @@ export const teamLogos = {
     '1610612766': require('../assets/teamlogos/1610612766.png'),
 }
 
+export const designVariables = {
+    primary: "#0554F2",
+    secondary: "#034AA6",
+    tertiary: "#3D90D9",
+    white: "#F2F2F2",
+    black: "#0D0D0D"
+}
+
 export const common = StyleSheet.create({
     screenContainer: {
         flex: 1,

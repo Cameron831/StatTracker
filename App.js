@@ -62,7 +62,8 @@ function App() {
             component={ProfileModal}
             options={{
               presentation: 'modal',
-              headerTitleAlign: "center"
+              headerTitleAlign: "center",
+              headerTitle: '' 
             }}
           />
           </Stack.Navigator>
