@@ -7,26 +7,30 @@ import TrackerView from '../components/TrackerView';
 const HomeScreen = ({ navigation }) => {
   const [trackingInfo, setTrackingInfo] = useState(null);
 
+  const fetchTrackingInfo = async () => {
+    try {
+      const token = await AsyncStorage.getItem('LOGIN_TOKEN');
+      const tracking = await axios.get(`http://192.168.1.13:3000/user/tracking/${token}`);
+      setTrackingInfo(tracking.data);
+    } catch (error) {
+      console.error("Error fetching tracking", error);
+    }
+  };
+
   useEffect(() => {
-    const getTracking = async () => {
-      try {
-        const token = await AsyncStorage.getItem('LOGIN_TOKEN');
-        const tracking = await axios.get(`http://192.168.1.13:3000/user/tracking/${token}`);
-        setTrackingInfo(tracking.data);
-      } catch (error) {
-        console.error("Error fetching tracking", error);
-      }
-    };
-
-    const subscribe = navigation.addListener('focus', getTracking);
-
-    return subscribe
+    fetchTrackingInfo(); 
+    const subscribe = navigation.addListener('focus', fetchTrackingInfo);
+    return () => subscribe.remove();
   }, [navigation]);
 
   return (
     <View>
       {trackingInfo && (
-        <TrackerView trackingInfo={trackingInfo} navigation={navigation} />
+        <TrackerView 
+          trackingInfo={trackingInfo} 
+          navigation={navigation}  
+          refreshTrackingInfo={fetchTrackingInfo}
+        />
       )}
     </View>
   );
