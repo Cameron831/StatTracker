@@ -4,9 +4,13 @@ import {teamColors, teamLogos} from '../stylesheets/styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
+const playersData = require('../players.json');
+const players = playersData.players
+
 const PlayerModal = ({route, navigation}) => {
     const [trackingInfo, setTrackingInfo] = useState({})
-    const player = route.params.player
+    const playerId = route.params.playerId
+    const player = players.find(p => p.PERSON_ID == playerId)
 
     useEffect(() => {
 
@@ -28,10 +32,10 @@ const PlayerModal = ({route, navigation}) => {
       try {
         const token = await AsyncStorage.getItem('LOGIN_TOKEN');
         const tracking = await axios.get(`http://192.168.1.13:3000/user/tracking/${token}`)
-        let foundPlayer = tracking.data.find(p => p.player == route.params.player.PERSON_ID);
+        let foundPlayer = tracking.data.find(p => p.player == playerId);
         if(!foundPlayer) {
           const newPlayerData = {
-            player: route.params.player.PERSON_ID,
+            player: playerId,
             PTS: false,
             REB: false,
             AST: false,

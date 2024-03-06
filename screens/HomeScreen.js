@@ -26,7 +26,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View>
       {trackingInfo && (
-        <TrackerView trackingInfo={trackingInfo} />
+        <TrackerView trackingInfo={trackingInfo} navigation={navigation} />
       )}
     </View>
   );

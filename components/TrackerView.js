@@ -1,8 +1,8 @@
 import React, {useState, useCallback} from 'react';
-import {Text, FlatList, View, StyleSheet, RefreshControl} from 'react-native';
+import {Text, FlatList, View, StyleSheet, RefreshControl, TouchableOpacity} from 'react-native';
 import TrackedPlayer from './TrackedPlayer';
 
-const TrackerView = ({trackingInfo}) => {
+const TrackerView = ({trackingInfo, navigation}) => {
   const [refreshing, setRefreshing] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -13,7 +13,7 @@ const TrackerView = ({trackingInfo}) => {
     // Simulate a network request for demo purposes
     setTimeout(() => {
       setRefreshing(false);
-    }, 1500);
+    }, 100);
   }, []);
 
   const filteredTracking = trackingInfo.filter(item => item.AST || item.BLK || item.PTS || item.REB || item.STL || item.TPM);
@@ -24,7 +24,9 @@ const TrackerView = ({trackingInfo}) => {
           data={filteredTracking}
           keyExtractor={item => item.player}
           renderItem={({ item }) => (
-            <TrackedPlayer item={item} refreshKey={refreshKey}/>
+            <TouchableOpacity onPress={() => navigation.navigate('Player', {playerId: item.player})}>
+              <TrackedPlayer item={item} refreshKey={refreshKey}/>
+            </TouchableOpacity>
           )}
           style={styles.list}
           refreshControl={

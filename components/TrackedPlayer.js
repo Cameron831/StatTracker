@@ -15,7 +15,6 @@ const TrackedPlayer = ({item, refreshKey}) => {
           try {
             const box = await axios.get("http://192.168.1.13:3000/player/box-score/"+player.PERSON_ID)
             setBoxScore(box.data)
-            //console.log(box.data)
           } catch (error) {
             console.error("Error fetching box score", error)
           }

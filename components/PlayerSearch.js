@@ -43,7 +43,7 @@ const PlayerSearch = ({ navigation }) => {
                 data={filteredPlayers}
                 keyExtractor={item => item.PERSON_ID.toString()}
                 renderItem={({ item }) => (
-                  <TouchableOpacity onPress={() => navigation.navigate('Player', {player: item})}>
+                  <TouchableOpacity onPress={() => navigation.navigate('Player', {playerId: item.PERSON_ID})}>
                     <PlayerSearchItem player={item}/>
                   </TouchableOpacity>
                 )}
