@@ -32,7 +32,8 @@ function App() {
               headerLeft: () => (
                 <ProfileButton navigation={navigation}/>
               ),
-              headerTitleAlign: "center"
+              headerTitleAlign: "center",
+              headerTitle: 'StatTracker' 
             })}
           />
 
@@ -52,7 +53,8 @@ function App() {
             component={PlayerModal}
             options={{
               presentation: 'modal',
-              headerTitleAlign: "center"
+              headerTitleAlign: "center",
+              headerTitle: '' 
             }}
           />
 

@@ -212,11 +212,11 @@ const PlayerModal = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
     headerContainer: {
-      height: '20%',
+      height: '25%',
       overflow: 'hidden',    
     },
     image: {
-      width: '50%',
+      width: '55%',
       height: '90%',
       position: 'absolute',
       bottom: 0,
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
       opacity: 0.15
     },
     textContainer: {
-      width: '50%',
+      width: '45%',
       position: 'absolute',
       zIndex: 2,
       right: 0,
@@ -253,9 +253,10 @@ const styles = StyleSheet.create({
       marginBottom: 5
     },
     line: {
-      borderWidth: 0.5,
       height: 1,
-      width: '75%'
+      backgroundColor: 'lightgray',
+      marginVertical: 4,
+      width: '90%'
     },
     statContainer: {
       flexDirection: 'row',
