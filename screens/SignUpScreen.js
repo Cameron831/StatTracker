@@ -3,19 +3,18 @@ import { View, Text, TextInput, Button, Alert, TouchableOpacity, StyleSheet } fr
 import axios from 'axios';
 
 const SignUpScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
   useEffect(() => {
-      if (username && email && password && confirmPassword && password === confirmPassword) {
+      if (email && password && confirmPassword && password === confirmPassword) {
           setIsButtonEnabled(true);
       } else {
           setIsButtonEnabled(false);
       }
-  }, [username, email, password, confirmPassword]);
+  }, [email, password, confirmPassword]);
 
   const handleSignUp = async () => {
       if (password !== confirmPassword) {
@@ -24,8 +23,8 @@ const SignUpScreen = ({ navigation }) => {
       }
 
       try {
-          console.log('Signing up with:', username, email, password);
-          const user = { username: username, email: email, password: password };
+          console.log('Signing up with:', email, password);
+          const user = {email: email, password: password };
           const signup = await axios.post("http://3.133.152.176:3000/user/", user);
           navigation.navigate('Login');
       } catch (error) {
@@ -36,13 +35,6 @@ const SignUpScreen = ({ navigation }) => {
   return (
       <View style={styles.container}>
           <Text style={styles.title}>Sign Up</Text>
-          <TextInput
-              style={styles.input}
-              placeholder="Username"
-              value={username}
-              onChangeText={setUsername}
-              autoCapitalize="none"
-          />
           <TextInput
               style={styles.input}
               placeholder="Email"
