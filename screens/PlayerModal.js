@@ -31,7 +31,7 @@ const PlayerModal = ({route, navigation}) => {
     const getTracking = async () => {
       try {
         const token = await AsyncStorage.getItem('LOGIN_TOKEN');
-        const tracking = await axios.get(`http://192.168.1.13:3000/user/tracking/${token}`)
+        const tracking = await axios.get(`http://3.133.152.176:3000/user/tracking/${token}`)
         let foundPlayer = tracking.data.find(p => p.player == playerId);
         if(!foundPlayer) {
           const newPlayerData = {
@@ -44,7 +44,7 @@ const PlayerModal = ({route, navigation}) => {
             STL: false,
             user: token
           };
-          const response = await axios.post("http://192.168.1.13:3000/user/tracking", newPlayerData);
+          const response = await axios.post("http://3.133.152.176:3000/user/tracking", newPlayerData);
           foundPlayer = response.data; 
         }
         setTrackingInfo(foundPlayer);
@@ -56,7 +56,7 @@ const PlayerModal = ({route, navigation}) => {
 
     const updateTrackingDatabase = async (updatedTrackingInfo) => {
       try {
-        const response = await axios.put("http://192.168.1.13:3000/user/tracking", updatedTrackingInfo);
+        const response = await axios.put("http://3.133.152.176:3000/user/tracking", updatedTrackingInfo);
       } catch (error) {
         console.error("Error updating tracking info", error);
       }

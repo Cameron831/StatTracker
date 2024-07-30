@@ -10,7 +10,7 @@ const HomeScreen = ({ navigation }) => {
   const fetchTrackingInfo = async () => {
     try {
       const token = await AsyncStorage.getItem('LOGIN_TOKEN');
-      const tracking = await axios.get(`http://192.168.1.13:3000/user/tracking/${token}`);
+      const tracking = await axios.get(`http://3.133.152.176:3000/user/tracking/${token}`);
       setTrackingInfo(tracking.data);
     } catch (error) {
       console.error("Error fetching tracking", error);

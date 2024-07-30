@@ -14,7 +14,7 @@ const ProfileModal = ({ navigation }) => {
     const loadUserInfo = async () => {
       try {
         const token = await AsyncStorage.getItem('LOGIN_TOKEN');
-        const userInfo = await axios.get(`http://192.168.1.13:3000/user/${token}`)
+        const userInfo = await axios.get(`http://3.133.152.176:3000/user/${token}`)
         const userData = {username: userInfo.data.username, email: userInfo.data.email}
         setUser(userData);
       } catch (error) {
@@ -36,12 +36,12 @@ const ProfileModal = ({ navigation }) => {
     <View style={styles.container}>
       
       <View style={styles.greetingContainer}>
-        <Text style={styles.greeting}>Welcome to StatTracker</Text>
+        <Text style={styles.greeting}>Welcome to ParLazy</Text>
       </View>
 
       <View style={styles.aboutContainer}>
         <Text style={styles.about}>
-          StatTracker was built to be your sports betting companion.
+          ParLazy was built to be your sports betting companion.
           No more sifting through dense box scores to see how close you are
           to hitting on your last leg. This is an ongoing personal project,
           follow me on X @Cam_831 for updates or to reach out.
@@ -63,7 +63,7 @@ const ProfileModal = ({ navigation }) => {
       </View>
 
       {/*onPress={handleSignOut}*/}
-      <TouchableOpacity style={styles.signOutButton} onPress={() => console.log('Sign out pressed')}>
+      <TouchableOpacity style={styles.signOutButton} onPress={() => handleSignOut()}>
         <Text style={styles.buttonText}>Sign Out</Text>
       </TouchableOpacity>
     </View>

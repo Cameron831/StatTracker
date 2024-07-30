@@ -33,7 +33,7 @@ function App() {
                 <ProfileButton navigation={navigation}/>
               ),
               headerTitleAlign: "center",
-              headerTitle: 'StatTracker' 
+              headerTitle: 'ParLazy' 
             })}
           />
 
