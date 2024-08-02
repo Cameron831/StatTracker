@@ -14,7 +14,7 @@ const ProfileModal = ({ navigation }) => {
     const loadUserInfo = async () => {
       try {
         const token = await AsyncStorage.getItem('LOGIN_TOKEN');
-        const userInfo = await axios.get(`http://3.133.152.176:3000/user/${token}`)
+        const userInfo = await axios.get(`https://parlazyapi.cameronharris.dev:3000/user/${token}`)
         const userData = {username: userInfo.data.username, email: userInfo.data.email}
         setUser(userData);
       } catch (error) {

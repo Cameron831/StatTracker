@@ -25,7 +25,7 @@ const SignUpScreen = ({ navigation }) => {
       try {
           console.log('Signing up with:', email, password);
           const user = {email: email, password: password };
-          const signup = await axios.post("http://3.133.152.176:3000/user/", user);
+          const signup = await axios.post("https://parlazyapi.cameronharris.dev:3000/user/", user);
           navigation.navigate('Login');
       } catch (error) {
           console.error(error);

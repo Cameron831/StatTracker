@@ -13,7 +13,7 @@ const TrackedPlayer = ({item, refreshKey}) => {
     useEffect(() => {
         const getBoxScore = async () => {
           try {
-            const box = await axios.get("http://3.133.152.176:3000/player/box-score/"+player.PERSON_ID)
+            const box = await axios.get("https://parlazyapi.cameronharris.dev:3000/player/box-score/"+player.PERSON_ID)
             setBoxScore(box.data)
           } catch (error) {
             console.error("Error fetching box score", error)

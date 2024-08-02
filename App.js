@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { AppRegistry } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import 'react-native-gesture-handler';
 
 import HomeScreen from './screens/HomeScreen';
 import SplashScreen from './screens/SplashScreen';
@@ -11,6 +13,7 @@ import ProfileButton from './components/ProfileButton';
 import ProfileModal from './screens/ProfileModal';
 import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
+import { name as appName } from './app.json';
 
 const Stack = createStackNavigator();
 
@@ -74,3 +77,5 @@ function App() {
   }
 
   export default App;
+
+  AppRegistry.registerComponent(appName, () => App);

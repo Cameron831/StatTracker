@@ -18,7 +18,7 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = async () => {
       try {
-          const response = await axios.post("http://3.133.152.176:3000/user/login", { email: email, password: password });
+          const response = await axios.post("https://parlazyapi.cameronharris.dev:3000/user/login", { email: email, password: password });
 
           if (response.status === 200) {
               await AsyncStorage.setItem('LOGIN_TOKEN', `${response.data._id}`);

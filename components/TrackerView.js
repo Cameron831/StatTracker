@@ -38,7 +38,7 @@ const TrackerView = ({trackingInfo, navigation, refreshTrackingInfo}) => {
         STL: false,
         user: token
       };
-      const response = await axios.put("http://3.133.152.176:3000/user/tracking", playerData);
+      const response = await axios.put("https://parlazyapi.cameronharris.dev:3000/user/tracking", playerData);
 
       if (response.status === 200) {
         // Call the passed-down function to refresh tracking data
